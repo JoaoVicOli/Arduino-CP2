@@ -1,4 +1,4 @@
-#**CP2 Edge Computing Arduino**
+# **CP2 Edge Computing Arduino**
 
 >O caso em questão trata de uma vinícola tradicional que está buscando expandir suas operações para o comércio eletrônico, mantendo uma experiência de atendimento ao cliente semelhante à oferecida em sua loja física. Para atender a essa demanda, foi solicitado o >desenvolvimento de um sistema de monitoramento para o ambiente de armazenamento de vinhos.
 
@@ -8,7 +8,7 @@
 
 ___
 
-##📋 Pré-requisitos
+## 📋 Pré-requisitos
 
 + Ter o arduino IDE instalado em sua máquina, para rodar os códigos da placa.
 + materiais :
@@ -24,20 +24,20 @@ ___
 
 ___
 
-##:satellite: :mag:
+## :satellite: :mag:
 
 Segue exemplo de montagem e codigo do projeto :
 https://wokwi.com/projects/395971841743713281
 
 ___
 
-##🛠️ Construído com
+## 🛠️ Construído com
 * Wokwi
 * Arduino IDE
 
 ___
 
-##✒️ Autores
+## ✒️ Autores
 + Eric Segawa Montagner RM558224
 + Gabriel Luni Nakashima RM558096
 + Gabriel Lacerda Araujo RM558307
