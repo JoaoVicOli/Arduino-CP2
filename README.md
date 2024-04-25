@@ -32,8 +32,8 @@ https://wokwi.com/projects/395971841743713281
 ___
 
 🛠️ Construído com
-*Wokwi
-*Arduino IDE
+* Wokwi
+* Arduino IDE
 
 ___
 
