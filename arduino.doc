@@ -1,0 +1,173 @@
+#include <LiquidCrystal.h>
+
+byte sun1[8] = { B00000, B00100, B01110, B11111, B01110, B00100, B00000, B00000 };
+byte temp1[8] = { B00100, B00100, B00100, B00100, B00100, B01110, B01110, B01110 };
+byte rain1[8] = { B00000, B00100, B01110, B11111, B00100, B00100, B10100, B01000 };
+byte sadFace1[8] = { B00000, B00000, B01010, B00000, B01110, B10001, B00000, B00000 };
+byte happyFace1[8] = { B00000, B00000, B01010, B00000, B10001, B01110, B00000, B00000 };
+byte midFace1[8] = { B00000, B00000, B01010, B00000, B00000, B01110, B00000, B00000 };
+
+#include <DHT.h>
+
+#define DHTPIN 11
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+float hum;
+float temp;
+
+LiquidCrystal lcd(12, 10, 9, 7, 6, 5);
+
+int ldrPin = A0; 
+int ldrVal;
+int intensidadeLuz; 
+int redPin = 13; 
+int yellowPin = 8; 
+int greenPin = 4;
+int buzzer = 2; 
+
+void setup() { 
+  Serial.begin(9600); 
+  pinMode(redPin, OUTPUT); 
+  pinMode(yellowPin, OUTPUT); 
+  pinMode(greenPin, OUTPUT); 
+  pinMode (buzzer, OUTPUT); 
+  
+  dht.begin();
+
+  lcd.begin(16,2);              
+  lcd.clear();                  
+  lcd.setCursor(5,0);           
+  lcd.print("Arduino");    
+  lcd.setCursor(5,1);           
+  lcd.print("Boys ;)");
+  
+  delay(5000);
+  lcd.clear();
+
+  lcd.createChar(0, sun1);
+  lcd.createChar(1, temp1);
+  lcd.createChar(2, rain1);
+  lcd.createChar(3, sadFace1);
+  lcd.createChar(4, happyFace1);
+  lcd.createChar(5, midFace1);
+}
+
+void loop() {
+
+  float mediaLuz = 0;
+  float mediaTemp = 0;
+  float mediaHum = 0;
+
+  for(int i = 0; i < 10; i++) {
+    ldrVal = analogRead(ldrPin);
+    intensidadeLuz = map(ldrVal, 969, 49, 0, 100);
+    mediaLuz += intensidadeLuz;
+    
+    hum = dht.readHumidity();
+    temp = dht.readTemperature();
+    
+    mediaTemp += temp;
+    mediaHum += hum;
+    delay(500);
+  }
+
+  intensidadeLuz = mediaLuz / 10;
+  temp = mediaTemp / 10;
+  hum = mediaHum / 10;
+
+  digitalWrite(greenPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(redPin, LOW);
+  noTone(buzzer);
+  Serial.print("luminosidade: ");
+  Serial.print(intensidadeLuz);
+  Serial.println(" %");
+
+  Serial.print("temp: ");
+  Serial.print(temp);
+  Serial.println(" C");
+
+  Serial.print("humidity: ");
+  Serial.print(hum);
+  Serial.println(" %");
+  Serial.println("-----------------");
+
+  delay(500);
+  
+  if (intensidadeLuz < 50 && hum > 50 && hum < 70 && temp > 10 && temp < 15) {
+    digitalWrite(greenPin, HIGH);
+    digitalWrite(yellowPin, LOW);
+    digitalWrite(redPin, LOW);
+    delay(300);
+  }
+
+  if ((intensidadeLuz > 75 && intensidadeLuz < 104) || hum > 70 || temp > 15) {
+    digitalWrite(redPin, HIGH);
+    digitalWrite(yellowPin, LOW);
+    digitalWrite(greenPin, LOW);
+    tone(buzzer,200,3000);
+    delay(3000);
+    noTone(buzzer);
+    delay(1000);
+  }
+
+  if ((intensidadeLuz > 50 && intensidadeLuz < 75) || hum < 50 || temp < 10) {
+    digitalWrite(yellowPin, HIGH);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(redPin, LOW);
+    delay(300);
+    tone(buzzer,800,3000);
+    delay(3000);
+    noTone(buzzer);
+    delay(1000);
+  }
+
+  lcd.noDisplay();
+  delay(500);
+  lcd.display();
+  lcd.setCursor(3, 0);  
+  lcd.write(byte(0));
+  lcd.setCursor(7, 0);  
+  lcd.write(byte(1));
+  lcd.setCursor(12, 0);  
+  lcd.write(byte(2));
+
+  delay(2000);
+  
+  if (intensidadeLuz < 50) {
+    lcd.setCursor(3, 1);
+    lcd.write(byte(4));
+  } else if (intensidadeLuz > 50 && intensidadeLuz < 75) {
+    lcd.setCursor(3, 1);
+    lcd.write(byte(5));
+  } else if (intensidadeLuz > 75) {
+    lcd.setCursor(3, 1);
+    lcd.write(byte(3));
+  }
+
+  if (hum < 50) {
+    lcd.setCursor(12, 1);
+    lcd.write(byte(5));
+  } else if (hum > 50 && hum < 70) {
+    lcd.setCursor(12, 1);
+    lcd.write(byte(4));
+  } else if (hum > 70) {
+    lcd.setCursor(12, 1);
+    lcd.write(byte(3));
+  }
+
+  if (temp < 10) {
+    lcd.setCursor(7, 1);
+    lcd.write(byte(5));
+  } else if (temp > 10 && temp < 15) {
+    lcd.setCursor(7, 1);
+    lcd.write(byte(4));
+  } else if (temp > 15) {
+    lcd.setCursor(7, 1);
+    lcd.write(byte(3));
+  }
+
+delay(1500);
+
+}
