@@ -10,24 +10,36 @@ ___
 
 📋 Pré-requisitos
 
-Ter o arduino IDE instalado em sua máquina, para rodar os códigos da placa.
++ Ter o arduino IDE instalado em sua máquina, para rodar os códigos da placa.
++ materiais :
+  - Arduino Uno
+  - LDR
+  - LCD
+  - DHT22
+  - LED Vermelho; LED Amarelo; LED Verde
+  - 3x Resistores 220ohms
+  - 1x Buzzer
+  - Protoboard
+  - Cabos jumper
 
 ___
 
-🔧 Instalação
-Configure sua placa arduino conforme desmontrado no site do tinkercad, https://www.tinkercad.com/things/fv9QTRRPiTf-esps/editel?sharecode=_jCPcqZzjPi-lbidtPS2_ZePNYswGJrLEM3WQkNkD8A. Após ter sua placa montada, conecte-a com o computador. Baixe o arquivo vinheira.ino, compile e seu projeto estará funcionando!
+:satellite: :mag_right:
+
+Segue exemplo de montagem e codigo do projeto :
+https://wokwi.com/projects/395971841743713281
 
 ___
 
 🛠️ Construído com
-*Tinkercad
+*Wokwi
 *Arduino IDE
 
 ___
 
 ✒️ Autores
-Eric Segawa Montagner RM558224
-Gabriel Luni Nakashima RM558096
-Gabriel Lacerda Araujo RM558307
-João Victor Oliveira dos Santos RM557948
++ Eric Segawa Montagner RM558224
++ Gabriel Luni Nakashima RM558096
++ Gabriel Lacerda Araujo RM558307
++ João Victor Oliveira dos Santos RM557948
 
